@@ -24,6 +24,7 @@ const {
 import { Experiment, Variant } from 'react-native-ab';
 import {
   Analytics,
+  Action as GAAction,
   Hits as GAHits,
   Experiment as GAExperiment
 } from 'react-native-google-analytics';
@@ -76,6 +77,11 @@ var rnabtest = React.createClass({
               </Variant>
             </Experiment>
           </View>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._addClick}>
+          <Text style={styles.addClickTest}>
+            Add GA Click
+          </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._addImpression}>
           <Text style={styles.addImpressionTest}>
@@ -135,6 +141,26 @@ var rnabtest = React.createClass({
     );
     ga.add(gaImpression);
   }
+
+  _addClick() {
+    var action = new GAAction({
+      list: "Product List"
+    });
+
+    var gaClick = new GAHits.Click(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25, // Position
+      action
+    );
+    ga.add(gaClick);
+  }
 });
 
 var styles = StyleSheet.create({
@@ -163,6 +189,11 @@ var styles = StyleSheet.create({
     color: 'green',
     fontSize: 16,
     textAlign: 'center'
+  },
+  addClickTest: {
+    color: 'gray',
+    fontSize: 16,
+    textAlign: 'center'
   }
 });
 
@@ -186,7 +217,22 @@ Example of how to use custom dimensions:
 
 ### Enhanced Ecommerce Hits
 
-#### new GAHits.Impression(id, name, list, brand, category, variant, position, price)
+#### new Action(properties)
+
+* **properties (optional):** Object
+  * **id (required*):** string
+  * **affiliation (optional):** string
+  * **revenue (optional):** string
+  * **tax (optional):** string
+  * **shipping (optional):** string
+  * **coupon (optional):** string
+  * **list (optional):** number
+  * **step (optional):** number
+  * **option (optional):** number
+
+**\*** Required if the Hit type is **purchase** or **refund**.
+
+#### new Hits.Impression(id, name, list, brand, category, variant, position, price)
 
 * **id (required*):** string
 * **name (required*):** string
@@ -196,6 +242,21 @@ Example of how to use custom dimensions:
 * **variant (optional):** string
 * **position (optional):** number
 * **price (optional):** number
+
+**\*** Either **id** or **name** must be set.
+
+#### new Hits.Click(id, name, brand, category, variant, coupon, price, quantity, position, action)
+
+* **id (required\*):** string
+* **name (required\*):** string
+* **brand (optional):** string
+* **category (optional):** string
+* **variant (optional):** string
+* **coupon (optional):** string
+* **price (optional):** number
+* **quantity (optional):** number
+* **position (optional):** number
+* **action (optional):** Action
 
 **\*** Either **id** or **name** must be set.
 
