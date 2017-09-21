@@ -78,19 +78,29 @@ var rnabtest = React.createClass({
             </Experiment>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._addImpression}>
-          <Text style={styles.addImpressionTest}>
-            Add GA Impression
-          </Text>
-        </TouchableHighlight>
         <TouchableHighlight onPress={this._sendEvent}>
           <Text style={styles.sendEventTest}>
             Send GA Event
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setClick}>
-          <Text style={styles.setClickTest}>
-            Set GA Click
+        <TouchableHighlight onPress={this._addImpression}>
+          <Text style={styles.addImpressionTest}>
+            Add GA Product Impression
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._addClick}>
+          <Text style={styles.addClickTest}>
+            Add GA Product Click
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._addProductCart}>
+          <Text style={styles.addProductCartTest}>
+            Add GA Product to Cart
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._removeProductCart}>
+          <Text style={styles.removeProductCartTest}>
+            Remove GA Product from Cart
           </Text>
         </TouchableHighlight>
         <Text style={styles.instructions}>
@@ -142,7 +152,7 @@ var rnabtest = React.createClass({
     ga.add(gaImpression);
   }
 
-  _setClick() {
+  _addClick() {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -160,6 +170,46 @@ var rnabtest = React.createClass({
     var gaClickAction = new GAActions.Click("Product List");
 
     ga.set(gaClickAction);
+  }
+
+  _addProductCart() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaAddAction = new GAActions.Add();
+
+    ga.set(gaAddAction);
+  }
+
+  _removeProductCart() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaRemoveAction = new GAActions.Remove();
+
+    ga.set(gaRemoveAction);
   }
 });
 
@@ -190,8 +240,18 @@ var styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center'
   },
-  setClickTest: {
+  addClickTest: {
     color: 'gray',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  addProductCartTest: {
+    color: 'yellow',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  removeProductCartTest: {
+    color: 'purple',
     fontSize: 16,
     textAlign: 'center'
   }
@@ -219,7 +279,15 @@ Example of how to use custom dimensions:
 
 The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
 
+#### new Actions.Add(list)
+
+* **list (optional):** string
+
 #### new Actions.Click(list)
+
+* **list (optional):** string
+
+#### new Actions.Remove(list)
 
 * **list (optional):** string
 

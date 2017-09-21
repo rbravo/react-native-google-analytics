@@ -1,4 +1,7 @@
+import Add from './lib/actions/Add';
 import Click from './lib/actions/Click';
+import Remove from './lib/actions/Remove';
+
 import Event from './lib/hits/Event';
 import Exception from './lib/hits/Exception';
 import Impression from './lib/hits/Impression';
@@ -9,6 +12,7 @@ import Social from './lib/hits/Social';
 import Timing from './lib/hits/Timing';
 import Transaction from './lib/hits/Transaction';
 import Item from './lib/hits/Item';
+
 import _Analytics from './lib/Analytics';
 import _Experiment from './lib/Experiment';
 
@@ -26,7 +30,9 @@ export const Hits = {
 };
 
 export const Actions = {
-  Click
+  Add,
+  Click,
+  Remove
 };
 
 export const Analytics = _Analytics;
