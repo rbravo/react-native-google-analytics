@@ -1,4 +1,5 @@
 import Click from './lib/actions/Click';
+import Detail from './lib/actions/Detail';
 import Event from './lib/hits/Event';
 import Exception from './lib/hits/Exception';
 import Impression from './lib/hits/Impression';
@@ -26,7 +27,8 @@ export const Hits = {
 };
 
 export const Actions = {
-  Click
+  Click,
+  Detail
 };
 
 export const Analytics = _Analytics;

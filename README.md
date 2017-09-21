@@ -24,7 +24,7 @@ const {
 import { Experiment, Variant } from 'react-native-ab';
 import {
   Analytics,
-  Action as GAAction,
+  Actions as GAActions,
   Hits as GAHits,
   Experiment as GAExperiment
 } from 'react-native-google-analytics';
@@ -78,11 +78,6 @@ var rnabtest = React.createClass({
             </Experiment>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._addClick}>
-          <Text style={styles.addClickTest}>
-            Add GA Click
-          </Text>
-        </TouchableHighlight>
         <TouchableHighlight onPress={this._addImpression}>
           <Text style={styles.addImpressionTest}>
             Add GA Impression
@@ -91,6 +86,16 @@ var rnabtest = React.createClass({
         <TouchableHighlight onPress={this._sendEvent}>
           <Text style={styles.sendEventTest}>
             Send GA Event
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setClick}>
+          <Text style={styles.setClickTest}>
+            Set GA Click
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setDetail}>
+          <Text style={styles.setDetailTest}>
+            Set GA Detail
           </Text>
         </TouchableHighlight>
         <Text style={styles.instructions}>
@@ -142,12 +147,8 @@ var rnabtest = React.createClass({
     ga.add(gaImpression);
   }
 
-  _addClick() {
-    var action = new GAAction({
-      list: "Product List"
-    });
-
-    var gaClick = new GAHits.Click(
+  _setClick() {
+    var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
       "Product Brand",
@@ -156,10 +157,34 @@ var rnabtest = React.createClass({
       "Product Coupon",
       250, // Price
       1, // Quantity
-      25, // Position
-      action
+      25 // Position
     );
-    ga.add(gaClick);
+
+    ga.add(gaProduct);
+
+    var gaClickAction = new GAActions.Click("Product List");
+
+    ga.set(gaClickAction);
+  }
+
+  _setDetail() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaDetailAction = new GAActions.Detail();
+
+    ga.set(gaDetailAction);
   }
 });
 
@@ -190,8 +215,13 @@ var styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center'
   },
-  addClickTest: {
+  setClickTest: {
     color: 'gray',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  setDetailTest: {
+    color: 'brown',
     fontSize: 16,
     textAlign: 'center'
   }
@@ -217,20 +247,13 @@ Example of how to use custom dimensions:
 
 ### Enhanced Ecommerce Hits
 
-#### new Action(properties)
+#### new Actions.Click(list)
 
-* **properties (optional):** Object
-  * **id (required*):** string
-  * **affiliation (optional):** string
-  * **revenue (optional):** string
-  * **tax (optional):** string
-  * **shipping (optional):** string
-  * **coupon (optional):** string
-  * **list (optional):** number
-  * **step (optional):** number
-  * **option (optional):** number
+* **list (optional):** string
 
-**\*** Required if the Hit type is **purchase** or **refund**.
+#### new Actions.Detail(list)
+
+* **list (optional):** string
 
 #### new Hits.Impression(id, name, list, brand, category, variant, position, price)
 
@@ -245,7 +268,7 @@ Example of how to use custom dimensions:
 
 **\*** Either **id** or **name** must be set.
 
-#### new Hits.Click(id, name, brand, category, variant, coupon, price, quantity, position, action)
+#### new Hits.Product(id, name, brand, category, variant, coupon, price, quantity, position)
 
 * **id (required\*):** string
 * **name (required\*):** string
@@ -256,7 +279,6 @@ Example of how to use custom dimensions:
 * **price (optional):** number
 * **quantity (optional):** number
 * **position (optional):** number
-* **action (optional):** Action
 
 **\*** Either **id** or **name** must be set.
 
