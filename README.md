@@ -98,6 +98,22 @@ var rnabtest = React.createClass({
             Set GA Detail
           </Text>
         </TouchableHighlight>
+
+
+
+        <TouchableHighlight onPress={this._setCheckout}>
+          <Text style={styles.setCheckoutTest}>
+            Set GA Checkout
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setCheckoutOption}>
+          <Text style={styles.setCheckoutOptionTest}>
+            Set GA Checkout Option
+          </Text>
+        </TouchableHighlight>
+
+
+
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>
@@ -186,6 +202,32 @@ var rnabtest = React.createClass({
 
     ga.set(gaDetailAction);
   }
+
+  _setCheckout() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaCheckoutAction = new GAActions.Checkout(1, "Visa");
+
+    ga.set(gaCheckoutAction);
+  }
+
+  _setCheckoutOption() {
+    var gaCheckoutOptionAction = new GAActions.CheckoutOption(2, "FedEx");
+
+    ga.set(gaCheckoutOptionAction);
+  }
 });
 
 var styles = StyleSheet.create({
@@ -224,8 +266,20 @@ var styles = StyleSheet.create({
     color: 'brown',
     fontSize: 16,
     textAlign: 'center'
+  },
+  setCheckoutTest: {
+    color: 'red',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  setCheckoutOptionTest: {
+    color: 'pink',
+    fontSize: 16,
+    textAlign: 'center'
   }
 });
+
+setCheckoutOptionTest
 
 AppRegistry.registerComponent('rnabtest', () => rnabtest);
 
@@ -246,6 +300,16 @@ Example of how to use custom dimensions:
 ## API
 
 ### Enhanced Ecommerce Hits
+
+#### new Actions.Checkout(step, option)
+
+* **step (optional):** number
+* **option (optional):** string
+
+#### new Actions.CheckoutOption(step, option)
+
+* **step (optional):** number
+* **option (optional):** string
 
 #### new Actions.Click(list)
 

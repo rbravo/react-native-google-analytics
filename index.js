@@ -1,3 +1,5 @@
+import Checkout from './lib/actions/Checkout';
+import CheckoutOption from './lib/actions/CheckoutOption';
 import Click from './lib/actions/Click';
 import Detail from './lib/actions/Detail';
 import Event from './lib/hits/Event';
@@ -27,6 +29,8 @@ export const Hits = {
 };
 
 export const Actions = {
+  Checkout,
+  CheckoutOption,
   Click,
   Detail
 };
