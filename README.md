@@ -98,6 +98,13 @@ var rnabtest = React.createClass({
             Set GA Detail
           </Text>
         </TouchableHighlight>
+
+        <TouchableHighlight onPress={this._setPurchase}>
+          <Text style={styles.setPurchaseTest}>
+            Set GA Purchase
+          </Text>
+        </TouchableHighlight>
+
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>
@@ -186,6 +193,26 @@ var rnabtest = React.createClass({
 
     ga.set(gaDetailAction);
   }
+
+  _setPurchase() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaPurchaseAction = new GAActions.Purchase("T12345", "Product Store", 35, 3, 5, "LABORDAY2017");
+
+    ga.set(gaPurchaseAction);
+  }
 });
 
 var styles = StyleSheet.create({
@@ -224,6 +251,11 @@ var styles = StyleSheet.create({
     color: 'brown',
     fontSize: 16,
     textAlign: 'center'
+  },
+  setPurchaseTest: {
+    color: 'ebony',
+    fontSize: 16,
+    textAlign: 'center'
   }
 });
 
@@ -247,6 +279,8 @@ Example of how to use custom dimensions:
 
 ### Enhanced Ecommerce Hits
 
+The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
+
 #### new Actions.Click(list)
 
 * **list (optional):** string
@@ -254,6 +288,15 @@ Example of how to use custom dimensions:
 #### new Actions.Detail(list)
 
 * **list (optional):** string
+
+#### new Actions.Purchase(id, affiliation, revenue, tax, shipping, coupon)
+
+* **id (required):** string
+* **affiliation (optional):** string
+* **revenue (optional):** number
+* **tax (optional):** number
+* **shipping (optional):** number
+* **coupon (optional):** string
 
 #### new Hits.Impression(id, name, list, brand, category, variant, position, price)
 
