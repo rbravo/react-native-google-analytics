@@ -98,9 +98,6 @@ var rnabtest = React.createClass({
             Set GA Detail
           </Text>
         </TouchableHighlight>
-
-
-
         <TouchableHighlight onPress={this._setCheckout}>
           <Text style={styles.setCheckoutTest}>
             Set GA Checkout
@@ -111,9 +108,6 @@ var rnabtest = React.createClass({
             Set GA Checkout Option
           </Text>
         </TouchableHighlight>
-
-
-
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>
@@ -279,8 +273,6 @@ var styles = StyleSheet.create({
   }
 });
 
-setCheckoutOptionTest
-
 AppRegistry.registerComponent('rnabtest', () => rnabtest);
 
 ```
@@ -300,6 +292,8 @@ Example of how to use custom dimensions:
 ## API
 
 ### Enhanced Ecommerce Hits
+
+The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
 
 #### new Actions.Checkout(step, option)
 
