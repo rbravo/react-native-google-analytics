@@ -79,23 +79,33 @@ var rnabtest = React.createClass({
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._addImpression}>
-          <Text style={styles.addImpressionTest}>
+          <Text style={styles.feature}>
             Add GA Impression
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._sendEvent}>
-          <Text style={styles.sendEventTest}>
+          <Text style={styles.feature}>
             Send GA Event
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._setClick}>
-          <Text style={styles.setClickTest}>
+          <Text style={styles.feature}>
             Set GA Click
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._setDetail}>
-          <Text style={styles.setDetailTest}>
+          <Text style={styles.feature}>
             Set GA Detail
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setRefundAll}>
+          <Text style={styles.feature}>
+            Set GA Refund All
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setRefundProduct}>
+          <Text style={styles.feature}>
+            Set GA Refund Product
           </Text>
         </TouchableHighlight>
         <Text style={styles.instructions}>
@@ -186,6 +196,32 @@ var rnabtest = React.createClass({
 
     ga.set(gaDetailAction);
   }
+
+  _setRefundAll() {
+    var gaRefundAction = new GAActions.Refund("T12345");
+
+    ga.set(gaRefundAction);
+  }
+
+  _setRefundProduct () {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaRefundAction = new GAActions.Refund("T12345");
+
+    ga.set(gaRefundAction);
+  }
 });
 
 var styles = StyleSheet.create({
@@ -205,23 +241,8 @@ var styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  sendEventTest: {
-    color: 'blue',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  addImpressionTest: {
-    color: 'green',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  setClickTest: {
-    color: 'gray',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  setDetailTest: {
-    color: 'brown',
+  feature: {
+    color: 'black',
     fontSize: 16,
     textAlign: 'center'
   }
@@ -247,6 +268,8 @@ Example of how to use custom dimensions:
 
 ### Enhanced Ecommerce Hits
 
+The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
+
 #### new Actions.Click(list)
 
 * **list (optional):** string
@@ -254,6 +277,11 @@ Example of how to use custom dimensions:
 #### new Actions.Detail(list)
 
 * **list (optional):** string
+
+#### new Actions.Refund(id, isNonInteractive)
+
+* **id (required):** string
+* **isNonInteractive (optional):** boolean
 
 #### new Hits.Impression(id, name, list, brand, category, variant, position, price)
 
