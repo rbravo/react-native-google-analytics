@@ -88,9 +88,14 @@ var rnabtest = React.createClass({
             Add GA Product Impression
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._addClick}>
-          <Text style={styles.addClickTest}>
-            Add GA Product Click
+        <TouchableHighlight onPress={this._clickProduct}>
+          <Text style={styles.clickProductTest}>
+            Click GA Product
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setDetail}>
+          <Text style={styles.setDetailTest}>
+            Set GA Detail
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._addProductCart}>
@@ -152,7 +157,7 @@ var rnabtest = React.createClass({
     ga.add(gaImpression);
   }
 
-  _addClick() {
+  _clickProduct() {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -170,6 +175,26 @@ var rnabtest = React.createClass({
     var gaClickAction = new GAActions.Click("Product List");
 
     ga.set(gaClickAction);
+  }
+
+  _setDetail() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaDetailAction = new GAActions.Detail();
+
+    ga.set(gaDetailAction);
   }
 
   _addProductCart() {
@@ -240,8 +265,13 @@ var styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center'
   },
-  addClickTest: {
+  clickProductTest: {
     color: 'gray',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  setDetailTest: {
+    color: 'brown',
     fontSize: 16,
     textAlign: 'center'
   },
@@ -284,6 +314,10 @@ The enhanced ecommerce hits are not sent automatically, instead they are retaine
 * **list (optional):** string
 
 #### new Actions.Click(list)
+
+* **list (optional):** string
+
+#### new Actions.Detail(list)
 
 * **list (optional):** string
 
