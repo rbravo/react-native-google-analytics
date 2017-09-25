@@ -93,6 +93,11 @@ var rnabtest = React.createClass({
             Set GA Click
           </Text>
         </TouchableHighlight>
+        <TouchableHighlight onPress={this._setDetail}>
+          <Text style={styles.setDetailTest}>
+            Set GA Detail
+          </Text>
+        </TouchableHighlight>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>
@@ -161,6 +166,26 @@ var rnabtest = React.createClass({
 
     ga.set(gaClickAction);
   }
+
+  _setDetail() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaDetailAction = new GAActions.Detail();
+
+    ga.set(gaDetailAction);
+  }
 });
 
 var styles = StyleSheet.create({
@@ -194,6 +219,11 @@ var styles = StyleSheet.create({
     color: 'gray',
     fontSize: 16,
     textAlign: 'center'
+  },
+  setDetailTest: {
+    color: 'brown',
+    fontSize: 16,
+    textAlign: 'center'
   }
 });
 
@@ -220,6 +250,10 @@ Example of how to use custom dimensions:
 The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
 
 #### new Actions.Click(list)
+
+* **list (optional):** string
+
+#### new Actions.Detail(list)
 
 * **list (optional):** string
 
