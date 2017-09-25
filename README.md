@@ -130,6 +130,7 @@ var rnabtest = React.createClass({
       100,
       experiment
     );
+
     ga.send(gaEvent);
   }
 
@@ -144,6 +145,7 @@ var rnabtest = React.createClass({
       0, // Position
       200 // Price
     );
+
     ga.add(gaImpression);
   }
 
@@ -185,6 +187,32 @@ var rnabtest = React.createClass({
     var gaDetailAction = new GAActions.Detail();
 
     ga.set(gaDetailAction);
+  }
+
+  _setPromoImpression() {
+    var gaPromo = new GAHits.Promo(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category"
+    );
+
+    ga.add(gaPromo);
+  }
+
+  _setPromoClick() {
+    var gaPromo = new GAHits.Promo(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category"
+    );
+
+    ga.add(gaPromo);
+
+    var gaPromoClickAction = new GAActions.PromoClick();
+
+    ga.set(gaPromoClickAction);
   }
 });
 
