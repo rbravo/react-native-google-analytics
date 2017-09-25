@@ -1,5 +1,7 @@
+import Add from './lib/actions/Add';
 import Click from './lib/actions/Click';
 import Detail from './lib/actions/Detail';
+import Remove from './lib/actions/Remove';
 
 import Event from './lib/hits/Event';
 import Exception from './lib/hits/Exception';
@@ -29,8 +31,10 @@ export const Hits = {
 };
 
 export const Actions = {
+  Add,
   Click,
-  Detail
+  Detail,
+  Remove
 };
 
 export const Analytics = _Analytics;
