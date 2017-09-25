@@ -24,6 +24,7 @@ const {
 import { Experiment, Variant } from 'react-native-ab';
 import {
   Analytics,
+  Actions as GAActions,
   Hits as GAHits,
   Experiment as GAExperiment
 } from 'react-native-google-analytics';
@@ -87,6 +88,11 @@ var rnabtest = React.createClass({
             Send GA Event
           </Text>
         </TouchableHighlight>
+        <TouchableHighlight onPress={this._setClick}>
+          <Text style={styles.setClickTest}>
+            Set GA Click
+          </Text>
+        </TouchableHighlight>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>
@@ -135,6 +141,26 @@ var rnabtest = React.createClass({
     );
     ga.add(gaImpression);
   }
+
+  _setClick() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaClickAction = new GAActions.Click("Product List");
+
+    ga.set(gaClickAction);
+  }
 });
 
 var styles = StyleSheet.create({
@@ -163,6 +189,11 @@ var styles = StyleSheet.create({
     color: 'green',
     fontSize: 16,
     textAlign: 'center'
+  },
+  setClickTest: {
+    color: 'gray',
+    fontSize: 16,
+    textAlign: 'center'
   }
 });
 
@@ -188,16 +219,34 @@ Example of how to use custom dimensions:
 
 The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
 
-#### new GAHits.Impression(id, name, list, brand, category, variant, position, price)
+#### new Actions.Click(list)
 
-* **id (required\*):** string
-* **name (required\*):** string
+* **list (optional):** string
+
+#### new Hits.Impression(id, name, list, brand, category, variant, position, price)
+
+* **id (required*):** string
+* **name (required*):** string
 * **list (required):** string
 * **brand (optional):** string
 * **category (optional):** string
 * **variant (optional):** string
 * **position (optional):** number
 * **price (optional):** number
+
+**\*** Either **id** or **name** must be set.
+
+#### new Hits.Product(id, name, brand, category, variant, coupon, price, quantity, position)
+
+* **id (required\*):** string
+* **name (required\*):** string
+* **brand (optional):** string
+* **category (optional):** string
+* **variant (optional):** string
+* **coupon (optional):** string
+* **price (optional):** number
+* **quantity (optional):** number
+* **position (optional):** number
 
 **\*** Either **id** or **name** must be set.
 
