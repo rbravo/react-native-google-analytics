@@ -247,6 +247,8 @@ Example of how to use custom dimensions:
 
 ### Enhanced Ecommerce Hits
 
+The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
+
 #### new Actions.Click(list)
 
 * **list (optional):** string
