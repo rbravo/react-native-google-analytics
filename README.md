@@ -78,19 +78,19 @@ var rnabtest = React.createClass({
             </Experiment>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._addImpression}>
-          <Text style={styles.addImpressionTest}>
-            Add GA Impression
-          </Text>
-        </TouchableHighlight>
         <TouchableHighlight onPress={this._sendEvent}>
           <Text style={styles.sendEventTest}>
             Send GA Event
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setClick}>
-          <Text style={styles.setClickTest}>
-            Set GA Click
+        <TouchableHighlight onPress={this._addImpression}>
+          <Text style={styles.addImpressionTest}>
+            Add GA Product Impression
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._clickProduct}>
+          <Text style={styles.clickProductTest}>
+            Click GA Product
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._setDetail}>
@@ -98,13 +98,31 @@ var rnabtest = React.createClass({
             Set GA Detail
           </Text>
         </TouchableHighlight>
-
+        <TouchableHighlight onPress={this._addProductCart}>
+          <Text style={styles.addProductCartTest}>
+            Add GA Product to Cart
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._removeProductCart}>
+          <Text style={styles.removeProductCartTest}>
+            Remove GA Product from Cart
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setCheckout}>
+          <Text style={styles.setCheckoutTest}>
+            Set GA Checkout
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setCheckoutOption}>
+          <Text style={styles.setCheckoutOptionTest}>
+            Set GA Checkout Option
+          </Text>
+        </TouchableHighlight>
         <TouchableHighlight onPress={this._setPurchase}>
           <Text style={styles.setPurchaseTest}>
             Set GA Purchase
           </Text>
         </TouchableHighlight>
-
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>
@@ -154,7 +172,7 @@ var rnabtest = React.createClass({
     ga.add(gaImpression);
   }
 
-  _setClick() {
+  _clickProduct() {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -192,6 +210,72 @@ var rnabtest = React.createClass({
     var gaDetailAction = new GAActions.Detail();
 
     ga.set(gaDetailAction);
+  }
+
+  _addProductCart() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaAddAction = new GAActions.Add();
+
+    ga.set(gaAddAction);
+  }
+
+  _removeProductCart() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaRemoveAction = new GAActions.Remove();
+
+    ga.set(gaRemoveAction);
+  }
+
+  _setCheckout() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaCheckoutAction = new GAActions.Checkout(1, "Visa");
+
+    ga.set(gaCheckoutAction);
+  }
+
+  _setCheckoutOption() {
+    var gaCheckoutOptionAction = new GAActions.CheckoutOption(2, "FedEx");
+
+    ga.set(gaCheckoutOptionAction);
   }
 
   _setPurchase() {
@@ -242,13 +326,33 @@ var styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center'
   },
-  setClickTest: {
+  clickProductTest: {
     color: 'gray',
     fontSize: 16,
     textAlign: 'center'
   },
   setDetailTest: {
     color: 'brown',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  addProductCartTest: {
+    color: 'yellow',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  removeProductCartTest: {
+    color: 'purple',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  setCheckoutTest: {
+    color: 'red',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  setCheckoutOptionTest: {
+    color: 'pink',
     fontSize: 16,
     textAlign: 'center'
   },
@@ -281,6 +385,20 @@ Example of how to use custom dimensions:
 
 The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
 
+#### new Actions.Add(list)
+
+* **list (optional):** string
+
+#### new Actions.Checkout(step, option)
+
+* **step (optional):** number
+* **option (optional):** string
+
+#### new Actions.CheckoutOption(step, option)
+
+* **step (optional):** number
+* **option (optional):** string
+
 #### new Actions.Click(list)
 
 * **list (optional):** string
@@ -297,6 +415,10 @@ The enhanced ecommerce hits are not sent automatically, instead they are retaine
 * **tax (optional):** number
 * **shipping (optional):** number
 * **coupon (optional):** string
+
+#### new Actions.Remove(list)
+
+* **list (optional):** string
 
 #### new Hits.Impression(id, name, list, brand, category, variant, position, price)
 
