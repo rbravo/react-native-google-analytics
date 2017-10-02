@@ -1,6 +1,11 @@
+import Add from './lib/actions/Add';
+import Checkout from './lib/actions/Checkout';
+import CheckoutOption from './lib/actions/CheckoutOption';
 import Click from './lib/actions/Click';
 import Detail from './lib/actions/Detail';
+import Purchase from './lib/actions/Purchase';
 import Refund from './lib/actions/Refund';
+import Remove from './lib/actions/Remove';
 
 import Event from './lib/hits/Event';
 import Exception from './lib/hits/Exception';
@@ -30,9 +35,14 @@ export const Hits = {
 };
 
 export const Actions = {
+  Add,
+  Checkout,
+  CheckoutOption,
   Click,
   Detail,
-  Refund
+  Purchase,
+  Refund,
+  Remove
 };
 
 export const Analytics = _Analytics;
