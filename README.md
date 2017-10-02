@@ -79,48 +79,58 @@ var rnabtest = React.createClass({
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._sendEvent}>
-          <Text style={styles.sendEventTest}>
+          <Text style={styles.feature}>
             Send GA Event
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._addImpression}>
-          <Text style={styles.addImpressionTest}>
+          <Text style={styles.feature}>
             Add GA Product Impression
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._clickProduct}>
-          <Text style={styles.clickProductTest}>
+          <Text style={styles.feature}>
             Click GA Product
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._setDetail}>
-          <Text style={styles.setDetailTest}>
+          <Text style={styles.feature}>
             Set GA Detail
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._addProductCart}>
-          <Text style={styles.addProductCartTest}>
+          <Text style={styles.feature}>
             Add GA Product to Cart
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._removeProductCart}>
-          <Text style={styles.removeProductCartTest}>
+          <Text style={styles.feature}>
             Remove GA Product from Cart
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._setCheckout}>
-          <Text style={styles.setCheckoutTest}>
+          <Text style={styles.feature}>
             Set GA Checkout
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._setCheckoutOption}>
-          <Text style={styles.setCheckoutOptionTest}>
+          <Text style={styles.feature}>
             Set GA Checkout Option
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._setPurchase}>
-          <Text style={styles.setPurchaseTest}>
+          <Text style={styles.feature}>
             Set GA Purchase
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setRefundAll}>
+          <Text style={styles.feature}>
+            Set GA Refund All
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._setRefundProduct}>
+          <Text style={styles.feature}>
+            Set GA Refund Product
           </Text>
         </TouchableHighlight>
         <Text style={styles.instructions}>
@@ -297,6 +307,32 @@ var rnabtest = React.createClass({
 
     ga.set(gaPurchaseAction);
   }
+
+  _setRefundAll() {
+    var gaRefundAction = new GAActions.Refund("T12345");
+
+    ga.set(gaRefundAction);
+  }
+
+  _setRefundProduct () {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaRefundAction = new GAActions.Refund("T12345");
+
+    ga.set(gaRefundAction);
+  }
 });
 
 var styles = StyleSheet.create({
@@ -316,48 +352,8 @@ var styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  sendEventTest: {
-    color: 'blue',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  addImpressionTest: {
-    color: 'green',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  clickProductTest: {
-    color: 'gray',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  setDetailTest: {
-    color: 'brown',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  addProductCartTest: {
-    color: 'yellow',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  removeProductCartTest: {
-    color: 'purple',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  setCheckoutTest: {
-    color: 'red',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  setCheckoutOptionTest: {
-    color: 'pink',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  setPurchaseTest: {
-    color: 'ebony',
+  feature: {
+    color: 'black',
     fontSize: 16,
     textAlign: 'center'
   }
@@ -415,6 +411,11 @@ The enhanced ecommerce hits are not sent automatically, instead they are retaine
 * **tax (optional):** number
 * **shipping (optional):** number
 * **coupon (optional):** string
+
+#### new Actions.Refund(id, isNonInteractive)
+
+* **id (required):** string
+* **isNonInteractive (optional):** boolean
 
 #### new Actions.Remove(list)
 

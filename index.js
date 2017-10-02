@@ -4,6 +4,7 @@ import CheckoutOption from './lib/actions/CheckoutOption';
 import Click from './lib/actions/Click';
 import Detail from './lib/actions/Detail';
 import Purchase from './lib/actions/Purchase';
+import Refund from './lib/actions/Refund';
 import Remove from './lib/actions/Remove';
 
 import Event from './lib/hits/Event';
@@ -40,6 +41,7 @@ export const Actions = {
   Click,
   Detail,
   Purchase,
+  Refund,
   Remove
 };
 
