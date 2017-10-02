@@ -118,6 +118,11 @@ var rnabtest = React.createClass({
             Set GA Checkout Option
           </Text>
         </TouchableHighlight>
+        <TouchableHighlight onPress={this._setPurchase}>
+          <Text style={styles.setPurchaseTest}>
+            Set GA Purchase
+          </Text>
+        </TouchableHighlight>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>
@@ -272,6 +277,26 @@ var rnabtest = React.createClass({
 
     ga.set(gaCheckoutOptionAction);
   }
+
+  _setPurchase() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaPurchaseAction = new GAActions.Purchase("T12345", "Product Store", 35, 3, 5, "LABORDAY2017");
+
+    ga.set(gaPurchaseAction);
+  }
 });
 
 var styles = StyleSheet.create({
@@ -330,6 +355,11 @@ var styles = StyleSheet.create({
     color: 'pink',
     fontSize: 16,
     textAlign: 'center'
+  },
+  setPurchaseTest: {
+    color: 'ebony',
+    fontSize: 16,
+    textAlign: 'center'
   }
 });
 
@@ -376,6 +406,15 @@ The enhanced ecommerce hits are not sent automatically, instead they are retaine
 #### new Actions.Detail(list)
 
 * **list (optional):** string
+
+#### new Actions.Purchase(id, affiliation, revenue, tax, shipping, coupon)
+
+* **id (required):** string
+* **affiliation (optional):** string
+* **revenue (optional):** number
+* **tax (optional):** number
+* **shipping (optional):** number
+* **coupon (optional):** string
 
 #### new Actions.Remove(list)
 
