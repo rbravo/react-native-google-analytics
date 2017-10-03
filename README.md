@@ -78,24 +78,69 @@ var rnabtest = React.createClass({
             </Experiment>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._addImpression}>
-          <Text style={styles.addImpressionTest}>
-            Add GA Impression
-          </Text>
-        </TouchableHighlight>
         <TouchableHighlight onPress={this._sendEvent}>
-          <Text style={styles.sendEventTest}>
+          <Text style={styles.feature}>
             Send GA Event
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setClick}>
-          <Text style={styles.setClickTest}>
-            Set GA Click
+        <TouchableHighlight onPress={this._productImpression}>
+          <Text style={styles.feature}>
+            Add GA Product Impression
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setDetail}>
-          <Text style={styles.setDetailTest}>
-            Set GA Detail
+        <TouchableHighlight onPress={this._promoImpression}>
+          <Text style={styles.feature}>
+            Add GA Promo Impression
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._clickProduct}>
+          <Text style={styles.feature}>
+            Set GA Product Click
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._clickPromo}>
+          <Text style={styles.feature}>
+            Set GA Promo Click
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._productDetail}>
+          <Text style={styles.feature}>
+            Set GA Product Detail
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._addProductCart}>
+          <Text style={styles.feature}>
+            Set GA Add Product to Cart
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._removeProductCart}>
+          <Text style={styles.feature}>
+            Set GA Remove Product from Cart
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._checkout}>
+          <Text style={styles.feature}>
+            Set GA Checkout
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._checkoutOption}>
+          <Text style={styles.feature}>
+            Set GA Checkout Option
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._purchase}>
+          <Text style={styles.feature}>
+            Set GA Purchase
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._refundAll}>
+          <Text style={styles.feature}>
+            Set GA Refund All
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._refundProduct}>
+          <Text style={styles.feature}>
+            Set GA Refund Product
           </Text>
         </TouchableHighlight>
         <Text style={styles.instructions}>
@@ -134,8 +179,8 @@ var rnabtest = React.createClass({
     ga.send(gaEvent);
   }
 
-  _addImpression() {
-    var gaImpression = new GAHits.Impression(
+  _productImpression() {
+    var gaProductImpression = new GAHits.Impression(
       "P12345",
       "Product Name",
       "Product List",
@@ -146,10 +191,21 @@ var rnabtest = React.createClass({
       200 // Price
     );
 
-    ga.add(gaImpression);
+    ga.add(gaProductImpression);
   }
 
-  _setClick() {
+  _promoImpression() {
+    var gaPromo = new GAHits.Promo(
+      "PROMO12345",
+      "Promo Name",
+      "Promo Creative",
+      "Promo Position"
+    );
+
+    ga.add(gaPromo);
+  }
+
+  _clickProduct() {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -169,7 +225,22 @@ var rnabtest = React.createClass({
     ga.set(gaClickAction);
   }
 
-  _setDetail() {
+  _clickPromo() {
+    var gaPromo = new GAHits.Promo(
+      "PROMO12345",
+      "Promo Name",
+      "Promo Creative",
+      "Promo Position"
+    );
+
+    ga.add(gaPromo);
+
+    var gaPromoClickAction = new GAActions.PromoClick();
+
+    ga.set(gaPromoClickAction);
+  }
+
+  _productDetail() {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -189,30 +260,116 @@ var rnabtest = React.createClass({
     ga.set(gaDetailAction);
   }
 
-  _setPromoImpression() {
-    var gaPromo = new GAHits.Promo(
+  _addProductCart() {
+    var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
       "Product Brand",
-      "Product Category"
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
     );
 
-    ga.add(gaPromo);
+    ga.add(gaProduct);
+
+    var gaAddAction = new GAActions.Add();
+
+    ga.set(gaAddAction);
   }
 
-  _setPromoClick() {
-    var gaPromo = new GAHits.Promo(
+  _removeProductCart() {
+    var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
       "Product Brand",
-      "Product Category"
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
     );
 
-    ga.add(gaPromo);
+    ga.add(gaProduct);
 
-    var gaPromoClickAction = new GAActions.PromoClick();
+    var gaRemoveAction = new GAActions.Remove();
 
-    ga.set(gaPromoClickAction);
+    ga.set(gaRemoveAction);
+  }
+
+  _checkout() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaCheckoutAction = new GAActions.Checkout(1, "Visa");
+
+    ga.set(gaCheckoutAction);
+  }
+
+  _checkoutOption() {
+    var gaCheckoutOptionAction = new GAActions.CheckoutOption(2, "FedEx");
+
+    ga.set(gaCheckoutOptionAction);
+  }
+
+  _purchase() {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaPurchaseAction = new GAActions.Purchase("T12345", "Product Store", 35, 3, 5, "LABORDAY2017");
+
+    ga.set(gaPurchaseAction);
+  }
+
+  _refundAll() {
+    var gaRefundAction = new GAActions.Refund("T12345");
+
+    ga.set(gaRefundAction);
+  }
+
+  _refundProduct () {
+    var gaProduct = new GAHits.Product(
+      "P12345",
+      "Product Name",
+      "Product Brand",
+      "Product Category",
+      "Product Variant",
+      "Product Coupon",
+      250, // Price
+      1, // Quantity
+      25 // Position
+    );
+
+    ga.add(gaProduct);
+
+    var gaRefundAction = new GAActions.Refund("T12345");
+
+    ga.set(gaRefundAction);
   }
 });
 
@@ -233,23 +390,8 @@ var styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  sendEventTest: {
-    color: 'blue',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  addImpressionTest: {
-    color: 'green',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  setClickTest: {
-    color: 'gray',
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  setDetailTest: {
-    color: 'brown',
+  feature: {
+    color: 'black',
     fontSize: 16,
     textAlign: 'center'
   }
@@ -275,11 +417,47 @@ Example of how to use custom dimensions:
 
 ### Enhanced Ecommerce Hits
 
+The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
+
+#### new Actions.Add(list)
+
+* **list (optional):** string
+
+#### new Actions.Checkout(step, option)
+
+* **step (optional):** number
+* **option (optional):** string
+
+#### new Actions.CheckoutOption(step, option)
+
+* **step (optional):** number
+* **option (optional):** string
+
 #### new Actions.Click(list)
 
 * **list (optional):** string
 
 #### new Actions.Detail(list)
+
+* **list (optional):** string
+
+#### new Actions.PromoClick()
+
+#### new Actions.Purchase(id, affiliation, revenue, tax, shipping, coupon)
+
+* **id (required):** string
+* **affiliation (optional):** string
+* **revenue (optional):** number
+* **tax (optional):** number
+* **shipping (optional):** number
+* **coupon (optional):** string
+
+#### new Actions.Refund(id, isNonInteractive)
+
+* **id (required):** string
+* **isNonInteractive (optional):** boolean
+
+#### new Actions.Remove(list)
 
 * **list (optional):** string
 
@@ -307,6 +485,15 @@ Example of how to use custom dimensions:
 * **price (optional):** number
 * **quantity (optional):** number
 * **position (optional):** number
+
+**\*** Either **id** or **name** must be set.
+
+#### new Hits.Promo(id, name, creative, position)
+
+* **id (required\*):** string
+* **name (required\*):** string
+* **creative (optional):** string
+* **position (optional):** string
 
 **\*** Either **id** or **name** must be set.
 
