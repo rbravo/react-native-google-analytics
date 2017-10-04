@@ -83,52 +83,62 @@ var rnabtest = React.createClass({
             Send GA Event
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._addImpression}>
+        <TouchableHighlight onPress={this._productImpression}>
           <Text style={styles.feature}>
             Add GA Product Impression
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._clickProduct}>
+        <TouchableHighlight onPress={this._promoImpression}>
           <Text style={styles.feature}>
-            Click GA Product
+            Add GA Promo Impression
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setDetail}>
+        <TouchableHighlight onPress={this._clickProduct}>
           <Text style={styles.feature}>
-            Set GA Detail
+            Set GA Product Click
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._clickPromo}>
+          <Text style={styles.feature}>
+            Set GA Promo Click
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._productDetail}>
+          <Text style={styles.feature}>
+            Set GA Product Detail
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._addProductCart}>
           <Text style={styles.feature}>
-            Add GA Product to Cart
+            Set GA Add Product to Cart
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._removeProductCart}>
           <Text style={styles.feature}>
-            Remove GA Product from Cart
+            Set GA Remove Product from Cart
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setCheckout}>
+        <TouchableHighlight onPress={this._checkout}>
           <Text style={styles.feature}>
             Set GA Checkout
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setCheckoutOption}>
+        <TouchableHighlight onPress={this._checkoutOption}>
           <Text style={styles.feature}>
             Set GA Checkout Option
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setPurchase}>
+        <TouchableHighlight onPress={this._purchase}>
           <Text style={styles.feature}>
             Set GA Purchase
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setRefundAll}>
+        <TouchableHighlight onPress={this._refundAll}>
           <Text style={styles.feature}>
             Set GA Refund All
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._setRefundProduct}>
+        <TouchableHighlight onPress={this._refundProduct}>
           <Text style={styles.feature}>
             Set GA Refund Product
           </Text>
@@ -165,11 +175,12 @@ var rnabtest = React.createClass({
       100,
       experiment
     );
+
     ga.send(gaEvent);
   }
 
-  _addImpression() {
-    var gaImpression = new GAHits.Impression(
+  _productImpression() {
+    var gaProductImpression = new GAHits.Impression(
       "P12345",
       "Product Name",
       "Product List",
@@ -179,7 +190,19 @@ var rnabtest = React.createClass({
       0, // Position
       200 // Price
     );
-    ga.add(gaImpression);
+
+    ga.add(gaProductImpression);
+  }
+
+  _promoImpression() {
+    var gaPromo = new GAHits.Promo(
+      "PROMO12345",
+      "Promo Name",
+      "Promo Creative",
+      "Promo Position"
+    );
+
+    ga.add(gaPromo);
   }
 
   _clickProduct() {
@@ -202,7 +225,22 @@ var rnabtest = React.createClass({
     ga.set(gaClickAction);
   }
 
-  _setDetail() {
+  _clickPromo() {
+    var gaPromo = new GAHits.Promo(
+      "PROMO12345",
+      "Promo Name",
+      "Promo Creative",
+      "Promo Position"
+    );
+
+    ga.add(gaPromo);
+
+    var gaPromoClickAction = new GAActions.PromoClick();
+
+    ga.set(gaPromoClickAction);
+  }
+
+  _productDetail() {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -262,7 +300,7 @@ var rnabtest = React.createClass({
     ga.set(gaRemoveAction);
   }
 
-  _setCheckout() {
+  _checkout() {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -282,13 +320,13 @@ var rnabtest = React.createClass({
     ga.set(gaCheckoutAction);
   }
 
-  _setCheckoutOption() {
+  _checkoutOption() {
     var gaCheckoutOptionAction = new GAActions.CheckoutOption(2, "FedEx");
 
     ga.set(gaCheckoutOptionAction);
   }
 
-  _setPurchase() {
+  _purchase() {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -308,13 +346,13 @@ var rnabtest = React.createClass({
     ga.set(gaPurchaseAction);
   }
 
-  _setRefundAll() {
+  _refundAll() {
     var gaRefundAction = new GAActions.Refund("T12345");
 
     ga.set(gaRefundAction);
   }
 
-  _setRefundProduct () {
+  _refundProduct () {
     var gaProduct = new GAHits.Product(
       "P12345",
       "Product Name",
@@ -403,6 +441,8 @@ The enhanced ecommerce hits are not sent automatically, instead they are retaine
 
 * **list (optional):** string
 
+#### new Actions.PromoClick()
+
 #### new Actions.Purchase(id, affiliation, revenue, tax, shipping, coupon)
 
 * **id (required):** string
@@ -445,6 +485,15 @@ The enhanced ecommerce hits are not sent automatically, instead they are retaine
 * **price (optional):** number
 * **quantity (optional):** number
 * **position (optional):** number
+
+**\*** Either **id** or **name** must be set.
+
+#### new Hits.Promo(id, name, creative, position)
+
+* **id (required\*):** string
+* **name (required\*):** string
+* **creative (optional):** string
+* **position (optional):** string
 
 **\*** Either **id** or **name** must be set.
 
