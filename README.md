@@ -419,9 +419,9 @@ Example of how to use custom dimensions:
 
 The enhanced ecommerce hits are not sent automatically, instead they are retained until a regular hit is sent. For more documentation please go [here](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#enhancedecom).
 
-#### new Actions.Add(list)
+#### new Actions.Add()
 
-* **list (optional):** string
+No parameters accepted
 
 #### new Actions.Checkout(step, option)
 
@@ -443,6 +443,8 @@ The enhanced ecommerce hits are not sent automatically, instead they are retaine
 
 #### new Actions.PromoClick()
 
+No parameters accepted
+
 #### new Actions.Purchase(id, affiliation, revenue, tax, shipping, coupon)
 
 * **id (required):** string
@@ -457,9 +459,9 @@ The enhanced ecommerce hits are not sent automatically, instead they are retaine
 * **id (required):** string
 * **isNonInteractive (optional):** boolean
 
-#### new Actions.Remove(list)
+#### new Actions.Remove()
 
-* **list (optional):** string
+No parameters accepted
 
 #### new Hits.Impression(id, name, list, brand, category, variant, position, price)
 
