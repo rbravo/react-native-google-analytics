@@ -1,15 +1,18 @@
 {
-  "name": "@brandingbrand/react-native-google-analytics",
+  "name": "react-native-google-analytics",
   "repository": {
     "type": "git",
-    "url": "https://github.com/brandingbrand/react-native-google-analytics.git"
+    "url": "https://github.com/rbravo/react-native-google-analytics.git"
   },
-  "version": "2.0.1",
-  "description": "Google Analytics for React Native!",
+  "version": "2.0.2",
+  "description": "Google Analytics for React Native (with enhanced commerce actions)!",
   "main": "index.js",
   "author": "Lochlan Wansbrough <lochie@live.com> (http://lwansbrough.com)",
   "contributors": [{
     "name" : "Branding Brand"
+  },
+  {
+    "name" : "Rafael Bravo"
   }],
   "keywords": [
     "react",
@@ -22,6 +25,8 @@
     "events",
     "google",
     "experiment",
-    "variant"
+    "variant",
+    "enhanced",
+    "ecommerce"
   ]
 }
